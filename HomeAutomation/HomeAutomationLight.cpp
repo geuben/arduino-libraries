@@ -1,15 +1,22 @@
 #include "Arduino.h"
 #include "HomeAutomationLight.h"
 
-HomeAutomationLight::HomeAutomationLight(int pin, boolean active_high=true);
-{
+
+HomeAutomationLight::HomeAutomationLight(int pin) {
+  pinMode(pin, OUTPUT);
+  _pin = pin;
+  _active_high = true;
+  off();
+}
+
+HomeAutomationLight::HomeAutomationLight(int pin, boolean active_high) {
   pinMode(pin, OUTPUT);
   _pin = pin;
   _active_high = active_high;
   off();
 }
 
-boolen HomeAutomationLight::is_on() {
+boolean HomeAutomationLight::is_on() {
   return _on;
 }
 
@@ -37,5 +44,15 @@ void HomeAutomationLight::toggle() {
   } else {
     on();
   }
+}
+
+void HomeAutomationLight::set(boolean turn_on) {
+   if (turn_on != is_on()) {
+     if(turn_on) {
+       on();
+     } else {
+       off();
+     }
+   }
 }
 
